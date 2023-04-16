@@ -5,27 +5,50 @@ import apayo.myapayo.domain.Part;
 import apayo.myapayo.domain.Symptom;
 import apayo.myapayo.service.PartService;
 import apayo.myapayo.service.SymptomService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 public class SymptomController {
 
-    private final PartService partService;
+  //  private final PartService partService;
     private final SymptomService symptomService;
 
-    //부위ID에 따른 증상 조회
-    @PostMapping("/symptoms")
-    public ResponseEntity<List<Symptom>> list(@RequestParam Long partId) {
+    /**
+     * partId에 따른 증상 조회
+     */
+    @GetMapping("/api/symptoms/{partId}")
+    public Result findSymptomsByPartId(
+            @PathVariable("partId") Long id) {
 
-        List<Symptom> symptoms = symptomService.findSymptoms(partId);
-        return ResponseEntity.ok(symptoms);
+//        Part part = partService.findOne(id);
+
+        List<Symptom> findSymptoms = symptomService.findSymptoms(id);
+
+        System.out.println("findSymptoms = " + findSymptoms);
+
+        List<SymptomDto> collect = findSymptoms.stream()
+                .map(s -> new SymptomDto(s.getKorean_description()))
+                .collect(Collectors.toList());
+        return new Result(collect);
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class Result<T> {
+        private T data;
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class SymptomDto {
+        private String korean_description;
     }
 }

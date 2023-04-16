@@ -12,13 +12,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SymptomRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
+    //part의 id에 대한 symptom_list를 반환한다.
+//    public List<Symptom> findByPart(Long id) {
+//        return em.createQuery("select s from Partsymptomlink psl " +
+//                        "fetch join psl.part p fetch join psl.symptom s " +
+//                        "where p.id = :id", Symptom.class)
+//                .setParameter("id",id)
+//                .getResultList();
+//    }
 
-
-
-    public List<Symptom> findByPart(Long id) { //part의 id에 대한 symptom_list를 반환한다.
-        return em.createQuery("select s from Symptom s where s.id = :id",Symptom.class)
-                .setParameter("id",id)
+    public List<Symptom> findByPart(Long id) {
+        return em.createQuery("select distinct s from Partsymptomlink psl " +
+                        "join psl.part p " +
+                        "join psl.symptom s " +
+                        "where p.id = :id", Symptom.class)
+                .setParameter("id", id)
                 .getResultList();
     }
+
 }

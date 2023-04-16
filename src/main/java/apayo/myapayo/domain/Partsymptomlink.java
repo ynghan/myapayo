@@ -11,7 +11,7 @@ public class Partsymptomlink {
 
     @Id @GeneratedValue
     @Column(name = "partsymptomlink_id")
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="part_id")

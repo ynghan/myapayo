@@ -13,7 +13,7 @@ public class Part {
 
     @Id @GeneratedValue
     @Column(name = "part_id")
-    private int id;
+    private Long id;
 
     private String name;
 
