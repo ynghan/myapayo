@@ -35,7 +35,7 @@ public class SymptomController {
         System.out.println("findSymptoms = " + findSymptoms);
 
         List<SymptomDto> collect = findSymptoms.stream()
-                .map(s -> new SymptomDto(s.getKorean_description()))
+                .map(s -> new SymptomDto(s.getKorean_description(), s.getEnglish_description()))
                 .collect(Collectors.toList());
         return new Result(collect);
     }
@@ -50,5 +50,7 @@ public class SymptomController {
     @AllArgsConstructor
     static class SymptomDto {
         private String korean_description;
+        private String english_description;
     }
+
 }
