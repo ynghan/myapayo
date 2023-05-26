@@ -4,20 +4,37 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/apayo?characterEncoding=UTF-8&characterSetResults=UTF-8
-    username: root
-    password: dudgks56!!
+    url: jdbc:mysql://apayodb.cktoatskqovy.ap-northeast-1.rds.amazonaws.com:3306/apayodb
+    username: admin
+    password: britz911!!
+#spring:
+  #datasource:
+  #  driver-class-name: com.mysql.cj.jdbc.Driver
+  #  url: jdbc:mysql://localhost:3306/apayo?characterEncoding=UTF-8&characterSetResults=UTF-8
+  #  username: root
+  #  password: dudgks56!!
 
   jpa:
     database: mysql
     show-sql: true
     hibernate:
-      ddl-auto: none #create #애플리케이션 실행시점에 다 지우고 다시 생성
+      ddl-auto: create #create #애플리케이션 실행시점에 다 지우고 다시 생성
     properties:
       hibernate:
 #        show_sql: true
         format_sql: true
+
+jwt:
+  secret-key: 5McPlGtVHtw5wU9jo4ovcRP-z3rZV6MgI1ueE85lmIJ7tYdhR9vI4W8MyJQo9dVsA
+
+oauth:
+  kakao:
+    client-id: c0352241cb2d673767741d8c0e3fbaad
+    url:
+      auth: https://kauth.kakao.com
+      api: https://kapi.kakao.com
+
+
 
 logging:
   level:
